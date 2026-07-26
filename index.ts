@@ -35,4 +35,53 @@
 // - takes one parameter:
 // - update board output
 
-// const readlineSync = require("readline-sync");
+//inquire types:
+// "input" → user types text
+
+// "confirm" → yes/no
+
+// "rawlist" → numbered list
+
+// "select" → dropdown-style list
+
+// "number" → numeric input
+
+// "password" → hidden input
+
+//"name" => becomes the key
+//"message" => what shows the user
+//"default" => the default value
+
+import { startGame } from "./input-functions/start-game";
+import { askBoardSize } from "./input-functions/ask-board-size";
+import { confirm } from "./helper-functions/confirmation";
+import { endGame } from "./input-functions/end-game";
+
+async function mainBody() {
+  //greet user and start game
+  const greetResponse = await startGame(
+    "Hello, welcome to my Battleship game.",
+  );
+
+  //exit game if they dont want
+  if (greetResponse === false) {
+    await endGame("sorry to see you go", "Alright lets do this");
+  }
+
+  //select board size
+  let boardSize: number;
+
+  while (true) {
+    boardSize = await askBoardSize();
+
+    const confirmed = await confirm(
+      `Are you sure ${boardSize} is what you want?`,
+    );
+
+    if (confirmed) break;
+  }
+
+  //generate board
+}
+
+mainBody();
