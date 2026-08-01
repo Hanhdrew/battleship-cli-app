@@ -1,3 +1,5 @@
+//takes a number and returns a printable board (plain)
+
 export function generateBoard(num: number): Record<string, string[]> {
   const board: Record<string, string[]> = {};
 
