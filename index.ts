@@ -56,7 +56,6 @@ import { startGame } from "./input-functions/start-game";
 import { askBoardSize } from "./input-functions/ask-board-size";
 import { confirm } from "./helper-functions/confirmation";
 import { endGame } from "./input-functions/end-game";
-import { generateBoard } from "./board-functions/generate-board";
 
 async function mainBody() {
   //greet user and start game
@@ -82,9 +81,7 @@ async function mainBody() {
     if (confirmed) break;
   }
 
-  //generate board
-
-  let board = generateBoard(boardSize);
+  //generate board and ships
 }
 
 mainBody();
