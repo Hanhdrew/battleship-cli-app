@@ -1,6 +1,10 @@
 //takes transforms an array of board cells to generate the ships
 import type { Row, DataBoard } from "./generate-databoard";
 
+  type Direction = { row: number; col: number };
+  type Coordinate = { row: number; column: number };
+  type Coordinates = Coordinate[];
+
 export function generatePlayerBoard(dataBoard: DataBoard): DataBoard {
   let largeShips: number = 0;
   let smallShips: number = 0;
@@ -16,8 +20,6 @@ export function generatePlayerBoard(dataBoard: DataBoard): DataBoard {
     smallShips = 2;
   }
 
-  type Direction = { row: number; col: number };
-
   const direction: Direction[] = [
     { row: 0, col: 1 }, //right
     { row: 0, col: -1 }, //left
@@ -26,11 +28,40 @@ export function generatePlayerBoard(dataBoard: DataBoard): DataBoard {
   ];
 
   while (largeShips > 0) {
+
     const row: number = Math.floor(Math.random() * dataBoard.length);
     const column: number = Math.floor(Math.random() * dataBoard.length);
     const directionIndex: number = Math.floor(Math.random() * 4);
     const randomDirection = direction[directionIndex];
+
+    if (!randomDirection) continue;
+
+
+    const coordinates: Coordinates = [
+      {row: row, column: column}, //spot one
+      {row: row + randomDirection.row, column: column + randomDirection.col}, //spot two
+      {row: row + randomDirection.row * 2, column: column + randomDirection.col * 2} //spot three
+    ]
+
+for (let i of coordinates) {
+  if (
+    i.row < 0 ||
+    i.row >= dataBoard.length ||
+    i.column < 0 ||
+    i.column >= dataBoard.length
+  ) {
+    break;
   }
+
+  // if (dataBoard[i.row][i.column].type !== "empty") {
+  //   break;
+  // }
+
+  // dataBoard
+
+}
+
+
 }
 
 const testBoard1 = [
