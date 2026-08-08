@@ -1,9 +1,7 @@
 //takes transforms an array of board cells to generate the ships
-import type { Row, DataBoard } from "./generate-databoard";
 
-  type Direction = { row: number; col: number };
-  type Coordinate = { row: number; column: number };
-  type Coordinates = Coordinate[];
+import { generateID } from "../helper-functions/generate-id";
+import type { DataBoard, Direction, Coordinates } from "./board-types";
 
 export function generatePlayerBoard(dataBoard: DataBoard): DataBoard {
   let largeShips: number = 0;
@@ -27,74 +25,105 @@ export function generatePlayerBoard(dataBoard: DataBoard): DataBoard {
     { row: 1, col: 0 }, //down
   ];
 
-  while (largeShips > 0) {
+  //large ship generation
 
+  while (largeShips > 0) {
     const row: number = Math.floor(Math.random() * dataBoard.length);
     const column: number = Math.floor(Math.random() * dataBoard.length);
     const directionIndex: number = Math.floor(Math.random() * 4);
     const randomDirection = direction[directionIndex];
+    const id: number = generateID();
+    let validSpots = true;
 
     if (!randomDirection) continue;
 
-
     const coordinates: Coordinates = [
-      {row: row, column: column}, //spot one
-      {row: row + randomDirection.row, column: column + randomDirection.col}, //spot two
-      {row: row + randomDirection.row * 2, column: column + randomDirection.col * 2} //spot three
-    ]
+      //spot one
+      { row: row, column: column },
+      //spot two
+      { row: row + randomDirection.row, column: column + randomDirection.col },
+      //spot three
+      {
+        row: row + randomDirection.row * 2,
+        column: column + randomDirection.col * 2,
+      },
+    ];
 
-for (let i of coordinates) {
-  if (
-    i.row < 0 ||
-    i.row >= dataBoard.length ||
-    i.column < 0 ||
-    i.column >= dataBoard.length
-  ) {
-    break;
+    //validates spots
+    for (let i of coordinates) {
+      if (
+        i.row < 0 ||
+        i.row >= dataBoard.length ||
+        i.column < 0 ||
+        i.column >= dataBoard.length ||
+        dataBoard[i.row]![i.column]!.type !== "empty"
+      ) {
+        validSpots = false;
+        break;
+      }
+    }
+
+    if (!validSpots) {
+      continue;
+    }
+
+    //place the ships
+    for (let i of coordinates) {
+      dataBoard[i.row]![i.column]!.type = "large";
+      dataBoard[i.row]![i.column]!.id = id;
+    }
+
+    largeShips--;
   }
 
-  // if (dataBoard[i.row][i.column].type !== "empty") {
-  //   break;
-  // }
+  //small ship generation
 
-  // dataBoard
+  while (smallShips > 0) {
+    const row: number = Math.floor(Math.random() * dataBoard.length);
+    const column: number = Math.floor(Math.random() * dataBoard.length);
+    const directionIndex: number = Math.floor(Math.random() * 4);
+    const randomDirection = direction[directionIndex];
+    const id: number = generateID();
+    let validSpots = true;
 
+    if (!randomDirection) continue;
+
+    const coordinates: Coordinates = [
+      //spot one
+      { row: row, column: column },
+      //spot two
+      {
+        row: row + randomDirection.row,
+        column: column + randomDirection.col,
+      },
+    ];
+
+    //validates spots
+    for (let i of coordinates) {
+      if (
+        i.row < 0 ||
+        i.row >= dataBoard.length ||
+        i.column < 0 ||
+        i.column >= dataBoard.length ||
+        dataBoard[i.row]![i.column]!.type !== "empty"
+      ) {
+        validSpots = false;
+        break;
+      }
+    }
+
+    if (!validSpots) {
+      continue;
+    }
+
+    //place the ships
+    for (let i of coordinates) {
+      dataBoard[i.row]![i.column]!.type = "small";
+      dataBoard[i.row]![i.column]!.id = id;
+    }
+
+    smallShips--;
+  }
+
+  return dataBoard;
 }
-
-
-}
-
-const testBoard1 = [
-  [
-    { type: "large", id: 1, hit: false }, // Represents position A0
-    { type: "small", id: 2, hit: true }, // Represents position A1
-    { type: "small", id: 2, hit: false }, // Represents position A2
-  ],
-  [
-    { type: "large", id: 1, hit: false }, // Represents position B0
-    { type: "empty", hit: false }, // Represents position B1
-    { type: "empty", hit: true }, // Represents position B2
-  ],
-  [
-    { type: "large", id: 1, hit: false }, // Represents position C0
-    { type: "empty", hit: false }, // Represents position C1
-    { type: "empty", hit: false }, // Represents position C2
-  ],
-];
-
-generatePlayerBoard(testBoard1);
-
-// 4X4:
-
-// - [ ] 1 large
-// - [ ] 1 small
-
-// 5X5
-
-// - [ ] 1 large
-// - [ ] 2 small
-
-// 6X6
-
-// - [ ] 2 large
-// - [ ] 2 small

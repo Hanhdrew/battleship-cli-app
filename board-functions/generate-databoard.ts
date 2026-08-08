@@ -1,12 +1,6 @@
 //takes a number and generates board cells for a 2d grid
 
-export type Row = {
-  type: "empty" | "small" | "large";
-  id: number | null;
-  hit: boolean;
-};
-
-export type DataBoard = Row[][];
+import type { DataBoard, Row } from "./board-types";
 
 export function generateDataBoard(boardSize: number): DataBoard {
   let dataBoard: DataBoard = [];
