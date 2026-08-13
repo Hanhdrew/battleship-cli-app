@@ -63,7 +63,7 @@ async function mainBody() {
     "Hello, welcome to my Battleship game.",
   );
 
-  //exit game if they dont want
+  //exit game if they don't want to play
   if (greetResponse === false) {
     await endGame("sorry to see you go", "Alright lets do this");
   }
@@ -81,7 +81,10 @@ async function mainBody() {
     if (confirmed) break;
   }
 
-  //generate board and ships
+  //generate board ✅
+  //generate data board ✅
+  //generate player ships ✅
+  //generate a printBoard function
 }
 
 mainBody();

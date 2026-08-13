@@ -1,4 +1,4 @@
-//takes a number and generates board cells for a 2d grid
+//takes a number and generates board cells for a 2d grid (dataBoard)
 
 import type { DataBoard, Row } from "./board-types";
 
@@ -9,7 +9,7 @@ export function generateDataBoard(boardSize: number): DataBoard {
     let boardRow: Row[] = [];
 
     for (let j = 0; j < boardSize; j++) {
-      boardRow.push({ type: "empty", id: null, hit: false });
+      boardRow.push({ type: "empty", id: null, hit: false, isSunk: false });
     }
 
     dataBoard.push(boardRow);

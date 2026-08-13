@@ -1,12 +1,14 @@
-//takes a number and returns a printable board (plain)
+//takes a number and returns a visible board
 
-export function generateBoard(num: number): Record<string, string[]> {
-  const board: Record<string, string[]> = {};
+import type { VisibleBoard } from "./board-types";
+
+export function generateBoard(num: number): VisibleBoard {
+  const visibleBoard: VisibleBoard = {};
 
   for (let i = 0; i < num; i++) {
     const rowLabel = String.fromCharCode(65 + i);
-    board[rowLabel] = Array(num).fill("-");
+    visibleBoard[rowLabel] = Array(num).fill("-");
   }
 
-  return board;
+  return visibleBoard;
 }

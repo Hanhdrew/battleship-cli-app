@@ -1,4 +1,5 @@
-//takes transforms an array of board cells to generate the ships
+//takes transforms an array of board cells (dataBoard) to generate the ships (playerBoard)
+// - output is same shape as dataBoard
 
 import { generateID } from "../helper-functions/generate-id";
 import type { DataBoard, Direction, Coordinates } from "./board-types";
@@ -127,3 +128,32 @@ export function generatePlayerBoard(dataBoard: DataBoard): DataBoard {
 
   return dataBoard;
 }
+
+const testBoard: DataBoard = [
+  [
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+  ],
+  [
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+  ],
+  [
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+  ],
+  [
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+    { type: "empty", id: null, hit: false, isSunk: false },
+  ],
+];
+
+console.log(generatePlayerBoard(testBoard));
