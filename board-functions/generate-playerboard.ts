@@ -1,13 +1,14 @@
-//takes transforms an array of board cells (dataBoard) to generate the ships (playerBoard)
+//takes and transforms an array of board cells (dataBoard) to generate the ships (playerBoard)
 // - output is same shape as dataBoard
 
 import { generateID } from "../helper-functions/generate-id";
-import type { DataBoard, Direction, Coordinates } from "./board-types";
+import type { DataBoard } from "./board-types";
 
 export function generatePlayerBoard(dataBoard: DataBoard): DataBoard {
   let largeShips: number = 0;
   let smallShips: number = 0;
 
+  //ships based off the size of the board:
   if (dataBoard.length === 4) {
     largeShips = 1;
     smallShips = 1;
@@ -19,7 +20,7 @@ export function generatePlayerBoard(dataBoard: DataBoard): DataBoard {
     smallShips = 2;
   }
 
-  const direction: Direction[] = [
+  const direction: { row: number; col: number }[] = [
     { row: 0, col: 1 }, //right
     { row: 0, col: -1 }, //left
     { row: -1, col: 0 }, //up
@@ -38,19 +39,19 @@ export function generatePlayerBoard(dataBoard: DataBoard): DataBoard {
 
     if (!randomDirection) continue;
 
-    const coordinates: Coordinates = [
-      //spot one
+    const coordinates: { row: number; column: number }[] = [
+      //spot one:
       { row: row, column: column },
-      //spot two
+      //spot two:
       { row: row + randomDirection.row, column: column + randomDirection.col },
-      //spot three
+      //spot three:
       {
         row: row + randomDirection.row * 2,
         column: column + randomDirection.col * 2,
       },
     ];
 
-    //validates spots
+    //validates empty spaces
     for (let i of coordinates) {
       if (
         i.row < 0 ||
@@ -89,10 +90,10 @@ export function generatePlayerBoard(dataBoard: DataBoard): DataBoard {
 
     if (!randomDirection) continue;
 
-    const coordinates: Coordinates = [
-      //spot one
+    const coordinates: { row: number; column: number }[] = [
+      //spot one:
       { row: row, column: column },
-      //spot two
+      //spot two:
       {
         row: row + randomDirection.row,
         column: column + randomDirection.col,
@@ -128,32 +129,3 @@ export function generatePlayerBoard(dataBoard: DataBoard): DataBoard {
 
   return dataBoard;
 }
-
-const testBoard: DataBoard = [
-  [
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-  ],
-  [
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-  ],
-  [
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-  ],
-  [
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-    { type: "empty", id: null, hit: false, isSunk: false },
-  ],
-];
-
-console.log(generatePlayerBoard(testBoard));

@@ -1,14 +1,15 @@
-//takes a number and returns a visible board
+//takes an integer and returns / prints a visible board
 
 import type { VisibleBoard } from "./board-types";
 
 export function generateBoard(num: number): VisibleBoard {
-  const visibleBoard: VisibleBoard = {};
+  const visibleBoard: Record<string, string[]> = {};
 
   for (let i = 0; i < num; i++) {
     const rowLabel = String.fromCharCode(65 + i);
     visibleBoard[rowLabel] = Array(num).fill("-");
   }
 
+  console.table(visibleBoard);
   return visibleBoard;
 }

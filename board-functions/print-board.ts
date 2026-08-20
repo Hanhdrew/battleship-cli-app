@@ -3,15 +3,15 @@
 // - for console use only
 // - it will NOT modify any values
 
-import type { DataBoard } from "./board-types";
-import type { VisibleBoard } from "./board-types";
+import type { DataBoard, VisibleBoard } from "./board-types";
 
 export function printBoard(
   dataBoard: DataBoard,
   visibility: boolean,
 ): VisibleBoard {
-  //initialize two boards for return
+  //visibleBoard shows visibility for player
   const visibleBoard: VisibleBoard = {};
+  //transParentBoard reveals ships
   const transParentBoard: VisibleBoard = {};
 
   for (let [label, row] of dataBoard.entries()) {
@@ -45,112 +45,3 @@ export function printBoard(
   console.table(returnBoard);
   return returnBoard;
 }
-
-const testBoard: DataBoard = [
-  [
-    {
-      type: "empty",
-      id: null,
-      hit: false,
-      isSunk: false,
-    },
-    {
-      type: "large",
-      id: 4,
-      hit: false,
-      isSunk: false,
-    },
-    {
-      type: "empty",
-      id: null,
-      hit: false,
-      isSunk: false,
-    },
-    {
-      type: "empty",
-      id: null,
-      hit: false,
-      isSunk: false,
-    },
-  ],
-  [
-    {
-      type: "small",
-      id: 10,
-      hit: true,
-      isSunk: true,
-    },
-    {
-      type: "large",
-      id: 4,
-      hit: false,
-      isSunk: false,
-    },
-    {
-      type: "empty",
-      id: null,
-      hit: false,
-      isSunk: false,
-    },
-    {
-      type: "empty",
-      id: null,
-      hit: false,
-      isSunk: false,
-    },
-  ],
-  [
-    {
-      type: "small",
-      id: 10,
-      hit: true,
-      isSunk: true,
-    },
-    {
-      type: "large",
-      id: 4,
-      hit: true,
-      isSunk: false,
-    },
-    {
-      type: "empty",
-      id: null,
-      hit: false,
-      isSunk: false,
-    },
-    {
-      type: "empty",
-      id: null,
-      hit: false,
-      isSunk: false,
-    },
-  ],
-  [
-    {
-      type: "empty",
-      id: null,
-      hit: false,
-      isSunk: false,
-    },
-    {
-      type: "empty",
-      id: null,
-      hit: false,
-      isSunk: false,
-    },
-    {
-      type: "empty",
-      id: null,
-      hit: false,
-      isSunk: false,
-    },
-    {
-      type: "empty",
-      id: null,
-      hit: false,
-      isSunk: false,
-    },
-  ],
-];
-
-printBoard(testBoard, false);
