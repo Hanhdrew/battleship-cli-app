@@ -53,9 +53,18 @@
 //"default" => the default value
 
 import { startGame } from "./input-functions/start-game";
-import { askBoardSize } from "./input-functions/ask-board-size";
-import { confirm } from "./helper-functions/confirmation";
 import { endGame } from "./input-functions/end-game";
+import { confirm } from "./helper-functions/confirmation";
+import { askBoardSize } from "./input-functions/ask-board-size";
+import { generateBoard } from "./board-functions/generate-board";
+import { generateDataBoard } from "./board-functions/generate-databoard";
+import { generatePlayerBoard } from "./board-functions/generate-playerboard";
+import { printBoard } from "./board-functions/print-board";
+import { detectHit } from "./game-logic/detect-hit";
+import { detectSink } from "./game-logic/detect-sink";
+import { getBoardState } from "./game-logic/get-board-state";
+import { storeInput } from "./input-functions/store-input";
+import { options } from "./input-functions/options-menu";
 
 async function mainBody() {
   //greet user and start game
@@ -73,6 +82,8 @@ async function mainBody() {
 
   while (true) {
     boardSize = await askBoardSize();
+    const visibleBoard = generateBoard(boardSize);
+    console.table(visibleBoard);
 
     const confirmed = await confirm(
       `Are you sure ${boardSize} is what you want?`,
@@ -81,10 +92,20 @@ async function mainBody() {
     if (confirmed) break;
   }
 
-  //generate board ✅
-  //generate data board ✅
-  //generate player ships ✅
-  //generate a printBoard function
+  //clear and initiate game logic:
+  console.clear();
+  let dataBoard = generateDataBoard(boardSize);
+  let playerBoard = generatePlayerBoard(dataBoard);
+  let metaData = getBoardState(playerBoard);
+
+  //process each turn
+  while (metaData.remainingLargeShips > 0 && metaData.remainingSmallShips > 0) {
+    printBoard(playerBoard, false);
+  }
+
+  // console.log(dataBoard);
+  // console.log(playerBoard);
+  // console.log(metaData);
 }
 
 mainBody();
